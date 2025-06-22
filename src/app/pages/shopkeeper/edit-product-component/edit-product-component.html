@@ -1,0 +1,74 @@
+<!-- edit-product.component.html -->
+<nav class="navbar">
+  <div class="logo">🛍️ MyStore</div>
+  <div class="nav-links">
+    <a routerLink="/shopkeeper-dashboard">Dashboard</a>
+    <a routerLink="/store-product-dashboard">Product List</a>
+  </div>
+</nav>
+
+<main class="container">
+  <h1>Edit Product</h1>
+  <form #editForm="ngForm" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
+    <input type="hidden" name="productId" [value]="product.id" ngModel />
+
+    <div class="form-group">
+        <label for="name">Product Name</label>
+        <input
+            id="name"
+            name="name"
+            type="text"
+            [(ngModel)]="product.name"
+            required
+            #name="ngModel" 
+        />
+        <div *ngIf="name.invalid && name.touched" class="error">
+            Product Name is required.
+        </div>
+    </div>
+
+
+    <label for="description">Description</label>
+    <textarea
+      id="description"
+      name="description"
+      rows="4"
+      [(ngModel)]="product.description"
+    ></textarea>
+
+    <label for="price">Price ($)</label>
+    <input
+      id="price"
+      name="price"
+      type="number"
+      step="0.01"
+      [(ngModel)]="product.price"
+      required
+      #price="ngModel"
+    />
+    <div *ngIf="price.invalid && price.touched" class="error">
+      Price is required.
+    </div>
+
+    <label for="images">Upload New Images</label>
+    <input
+      id="images"
+      name="images"
+      type="file"
+      (change)="onFileChange($event)"
+      multiple
+    />
+
+    <button type="submit" [disabled]="editForm.invalid">Update Product</button>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-card">
+      <a routerLink="/shopkeeper-dashboard" class="nav-button"
+        >⬅ Back to Dashboard</a
+      >
+      <a routerLink="/store-product-dashboard" class="nav-button"
+        >📦 View Product List</a
+      >
+    </div>
+  </form>
+</main>

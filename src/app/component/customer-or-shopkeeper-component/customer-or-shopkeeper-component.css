@@ -1,0 +1,234 @@
+/* Base reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+body, html {
+  height: 100%;
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column; /* Allow stacking for multiple sections */
+  min-height: 100vh;
+}
+
+/* ===== Selection Page Styles ===== */
+
+.selection-container {
+  background: white;
+  max-width: 700px;
+  width: 100%;
+  padding: 40px 30px;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.15);
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.selection-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  color: #27ae60;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.option-card {
+  background: #f0fdf7;
+  border: 2px solid #27ae60;
+  border-radius: 12px;
+  width: 220px;
+  padding: 25px 20px;
+  text-decoration: none;
+  color: #27ae60;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.option-card:hover {
+  background: #27ae60;
+  color: white;
+  box-shadow: 0 12px 25px rgba(39, 174, 96, 0.6);
+}
+
+.option-card img {
+  width: 96px;
+  height: 96px;
+}
+
+.option-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+.option-card p {
+  font-size: 1rem;
+  color: inherit;
+  margin: 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 40px;
+  color: #27ae60;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.back-link:hover {
+  color: #1e8449;
+}
+
+/* Responsive selection page */
+@media (max-width: 600px) {
+  .options {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .option-card {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+/* ===== Marquee Slider Styles ===== */
+
+/* Container for marquee */
+.image-marquee {
+  width: 100%;
+  max-width: 1000px;
+  overflow: hidden;
+  background: #fff;
+  padding: 20px 0;
+  box-sizing: border-box;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+}
+
+/* Track that moves */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeAnim 20s linear infinite;
+}
+
+/* Group of 5 items */
+.marquee-group {
+  display: flex;
+}
+
+/* Each item styling */
+.marquee-item {
+  flex: none;
+  width: 180px;
+  margin: 0 15px;
+  text-align: center;
+  color: #333;
+  user-select: none;
+}
+
+.marquee-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
+}
+
+.marquee-item p {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Hover effect */
+.marquee-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Animation: move left by half width (one group) */
+@keyframes marqueeAnim {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive marquee */
+@media (max-width: 768px) {
+  .marquee-item {
+    width: 140px;
+    margin: 0 10px;
+  }
+  .marquee-item img {
+    height: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .marquee-item {
+    width: 110px;
+    margin: 0 6px;
+  }
+  .marquee-item img {
+    height: 70px;
+  }
+}
+
+/* ===== Footer Info ===== */
+
+.info-footer {
+  background: #fff;
+  padding: 20px 30px;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+.info-footer p {
+  margin: 6px 0;
+}
+
+.info-footer a {
+  color: #27ae60;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.info-footer a:hover {
+  color: #1e8449;
+  text-decoration: underline;
+}

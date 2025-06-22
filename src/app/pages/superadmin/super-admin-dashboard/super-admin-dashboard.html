@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Super Admin Dashboard - Shopping App</title>
+</head>
+<body>
+
+<nav class="sidebar">
+  <h2>Super Admin</h2>
+  <ul>
+    <li><a href="#" class="active">Dashboard</a></li>
+    <li><a href="#">User Management</a></li>
+    <li><a href="#">Product Management</a></li>
+    <li><a href="#">Order Management</a></li>
+    <li><a href="#">Inventory</a></li>
+    <li><a href="#">Reports</a></li>
+    <li><a href="#">Settings</a></li>
+    <li><a href="#">Roles & Permissions</a></li>
+    <li><a href="#">Support</a></li>
+  </ul>
+
+  <button class="logout-button" (click)="logout()">
+    <span class="icon">🔒</span> Logout
+  </button>
+
+  <footer>© 2025 Shopping App</footer>
+</nav>
+
+<main class="content">
+  <h1>Welcome, Super Admin</h1>
+
+  <section class="dashboard-cards">
+    <div class="card">
+      <div class="number">1,204</div>
+      <div class="label">Users</div>
+    </div>
+    <div class="card">
+      <div class="number">2,857</div>
+      <div class="label">Products</div>
+    </div>
+    <div class="card">
+      <div class="number">1,035</div>
+      <div class="label">Orders</div>
+    </div>
+    <div class="card">
+      <div class="number">524</div>
+      <div class="label">Support Tickets</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Recent Orders</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#1001</td>
+          <td>Jane Doe</td>
+          <td>Shipped</td>
+          <td>$125.50</td>
+          <td>2025-06-20</td>
+        </tr>
+        <tr>
+          <td>#1002</td>
+          <td>John Smith</td>
+          <td>Processing</td>
+          <td>$89.00</td>
+          <td>2025-06-19</td>
+        </tr>
+        <tr>
+          <td>#1003</td>
+          <td>Mary Johnson</td>
+          <td>Delivered</td>
+          <td>$230.00</td>
+          <td>2025-06-18</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+</body>
+</html>

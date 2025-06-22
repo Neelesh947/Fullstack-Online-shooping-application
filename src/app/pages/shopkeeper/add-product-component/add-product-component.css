@@ -1,0 +1,140 @@
+/* Container */
+.add-product-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+  transition: box-shadow 0.3s ease;
+}
+
+.add-product-container:hover {
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.add-product-container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #34495e;
+  letter-spacing: 1px;
+}
+
+/* Form Labels */
+form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #34495e;
+  user-select: none;
+}
+
+/* Inputs and textarea */
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form input[type="file"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1.8px solid #bdc3c7;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #2c3e50;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  font-family: inherit;
+  resize: vertical;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form textarea:focus,
+form input[type="file"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+  outline: none;
+}
+
+/* Placeholder styling */
+input::placeholder,
+textarea::placeholder {
+  color: #95a5a6;
+  font-style: italic;
+}
+
+/* Textarea specific */
+form textarea {
+  min-height: 120px;
+  line-height: 1.4;
+}
+
+/* Submit button */
+button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.15rem;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+  user-select: none;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2980b9, #1c5980);
+  box-shadow: 0 8px 25px rgba(28, 89, 128, 0.6);
+}
+
+button[type="submit"]:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .add-product-container {
+    margin: 1.5rem 1rem;
+    padding: 1.5rem 1.8rem;
+  }
+
+  .add-product-container h2 {
+    font-size: 1.5rem;
+  }
+
+  button[type="submit"] {
+    font-size: 1rem;
+  }
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.back-link-anchor,
+.logout-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-link-anchor:hover,
+.logout-link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,54 @@
+<header class="header">
+  <h1>Product Management</h1>
+</header>
+
+<main class="main-container">
+  <div class="top-bar">
+    <h2>Your Products</h2>
+    <button class="btn-add" routerLink='/store-add-product-dashboard'>+ Add Product</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading products...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="products-grid" *ngIf="!loading && !error && products.length > 0">
+    <div *ngFor="let product of products; let i = index" class="product-card">
+
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p class="product-desc">{{ product.description }}</p>
+      <p class="product-price">Price: ${{ product.price | number:'1.2-2' }}</p>
+
+      <div class="image-slider" *ngIf="product.images && product.images.length > 0">
+        <img
+          [src]="'data:image/jpeg;base64,' + product.images[currentImageIndex[i]]"
+          [alt]="product.name + ' image'"
+          class="product-image"
+          loading="lazy"
+        />
+        <div class="dots">
+          <span
+            *ngFor="let img of product.images; let j = index"
+            (click)="selectImage(i, j)"
+            [class.active]="currentImageIndex[i] === j"
+            class="dot"
+            [attr.aria-label]="'View image ' + (j + 1) + ' of ' + product.images.length"
+          ></span>
+        </div>
+      </div>
+
+      <div class="product-actions">
+        <a [routerLink]="['/store-edit-product-dashboard', product.id]" class="action-link">Edit</a>
+        <a href="#" class="action-link delete-link">Delete</a>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && products.length === 0" class="no-products">
+    No products found. Click "+ Add Product" to create one.
+  </div>
+</main>
+
+<footer class="footer-links">
+  <a routerLink="/shopkeeper-dashboard" class="back-link-anchor">&larr; Go Back to Dashboard</a>
+  <a (click)="logout()" class="logout-link">Logout</a>
+</footer>

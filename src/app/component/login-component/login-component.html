@@ -1,0 +1,55 @@
+<div class="login-container">
+  <div class="login-box">
+    <div class="logo" aria-label="Shopping cart logo">
+      <!-- Simple cart logo SVG -->
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="#ff6f61" role="img" aria-hidden="true">
+        <path d="M7 18c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.16 13h8.58l1.5-8H6.3l-1.5-4H0v2h3l3.6 7.59L4.25 14.04C4.09 14.32 4 14.65 4 15c0 1.1.9 2 2 2h12v-2H6.42c-.14 0-.25-.11-.25-.25l.03-.12L7.16 13z"/>
+      </svg>
+    </div>
+
+    <h2>Login to Your Account</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <input
+        type="text"
+        placeholder="Username"
+        formControlName="userName"
+        [class.invalid]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched"
+        aria-label="Username"
+        required
+      />
+      <div *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched" class="error">
+        Username is required.
+      </div>
+
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+        [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        aria-label="Password"
+        required
+      />
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
+        Password is required.
+      </div>
+
+      <div class="links">
+        <a routerLink="/forgot-password">Forgot Password?</a>
+      </div>
+
+      <button [disabled]="loading" [attr.aria-busy]="loading">
+        <span *ngIf="!loading">Login</span>
+        <span *ngIf="loading">Logging in...</span>
+      </button>
+
+      <p class="signup">
+        Don't have an account? <a routerLink="/selection">Sign up</a>
+      </p>
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    </form>
+  </div>
+</div>
