@@ -1,0 +1,29 @@
+package in.neelesh.online.shopping.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductImage extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
+
+	@Lob
+	@Column(name = "image_data", columnDefinition = "LONGBLOB")
+	private byte[] imageData;
+
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Product product;
+}

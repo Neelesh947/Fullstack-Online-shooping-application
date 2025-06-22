@@ -1,0 +1,30 @@
+server:
+  port: 1235
+
+spring:
+  application:
+    name: notification-service
+
+  kafka:
+    bootstrap-servers: localhost:9091
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+  mail:
+    host: localhost
+    port: 1025
+    username: ""  # Empty string instead of null
+    password: ""  # Empty string instead of null
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+mail:
+  sent:
+    from: customer-support@shopping.com
