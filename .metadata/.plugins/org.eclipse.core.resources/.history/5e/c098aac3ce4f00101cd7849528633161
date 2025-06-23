@@ -1,0 +1,9 @@
+package in.neelesh.online.shopping.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.neelesh.online.shopping.entity.Order;
+
+public interface OrderRepository extends JpaRepository<Order, String>{
+
+}

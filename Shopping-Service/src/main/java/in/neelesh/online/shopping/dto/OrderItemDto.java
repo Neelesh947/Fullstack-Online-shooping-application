@@ -1,0 +1,4 @@
+package in.neelesh.online.shopping.dto;
+
+public record OrderItemDto(String productId, int quantity) {
+}

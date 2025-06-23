@@ -1,0 +1,10 @@
+package in.neelesh.online.shopping.dto;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public record OrderTrackingDto(String orderId, String status, LocalDateTime estimatedDeliveryDate,
+		List<TimelineEvent> timeline) {
+	public record TimelineEvent(String event, LocalDateTime timestamp) {
+	}
+}

@@ -1,9 +1,11 @@
 package in.neelesh.online.shopping.entity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +22,13 @@ public class Product extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	private String name;
+	
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	private Double price;
 	private String userId;
+	@Min(value = 1, message = "Quantity must be at least 1")
+	private Integer quantity;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ProductImage> images = new ArrayList<>();

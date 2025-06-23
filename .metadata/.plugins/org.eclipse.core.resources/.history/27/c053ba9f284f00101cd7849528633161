@@ -1,0 +1,101 @@
+package in.neelesh.online.shopping.serviceImpl;
+
+import java.util.Base64;
+import java.util.List;
+
+import org.apache.kafka.common.Uuid;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import in.neelesh.online.shopping.dto.ProductCreateDto;
+import in.neelesh.online.shopping.dto.ProductResponseDto;
+import in.neelesh.online.shopping.entity.Product;
+import in.neelesh.online.shopping.entity.ProductImage;
+import in.neelesh.online.shopping.repository.ProductRepository;
+import in.neelesh.online.shopping.service.ProductService;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class ProductServiceImpl implements ProductService {
+
+	private final ProductRepository productRepository;
+//	private final ProductImageRepository productImageRepository;
+
+	@Override
+	public Product createProduct(ProductCreateDto productdto, String storeManagerId, List<MultipartFile> images,
+			String realm) {
+		checkProductNotExistsForUser(productdto.name(), storeManagerId);
+		Product product = new Product();
+		product.setName(productdto.name());
+		product.setDescription(productdto.description());
+		product.setPrice(productdto.price());
+		product.setUserId(storeManagerId);
+		product.setId(Uuid.randomUuid().toString());
+
+		if (images != null && !images.isEmpty()) {
+			for (MultipartFile file : images) {
+				try {
+					ProductImage image = new ProductImage();
+					image.setImageData(file.getBytes());
+					image.setProduct(product);
+					image.setId(Uuid.randomUuid().toString());
+					product.getImages().add(image);
+				} catch (Exception e) {
+					throw new RuntimeException("Failed to read image file: " + file.getOriginalFilename(), e);
+				}
+			}
+		}
+		return productRepository.save(product);
+	}
+
+	private void checkProductNotExistsForUser(String name, String storeManagerId) {
+		boolean exists = productRepository.existsByNameAndUserId(name, storeManagerId);
+		if (exists) {
+			throw new IllegalArgumentException("Product with name '" + name + "' already exists for this user.");
+		}
+	}
+
+	public List<ProductResponseDto> getProductsByStoreManager(String storeManagerId, String realm) {
+		return productRepository.findByUserId(storeManagerId).stream().map(product -> {
+			var imageBase64List = product.getImages().stream().map(ProductImage::getImageData)
+					.map(Base64.getEncoder()::encodeToString).toList();
+
+			return new ProductResponseDto(product.getId(), product.getName(), product.getDescription(),
+					product.getPrice(), imageBase64List);
+		}).toList();
+	}
+
+	@Override
+	public Product updateProduct(String productId, ProductCreateDto productdto, String storeManagerId, String realm,
+			List<MultipartFile> images) {
+		Product product = productRepository.findByIdAndUserId(productId, storeManagerId)
+				.orElseThrow(() -> new RuntimeException("Product not found or access denied"));
+		product.setName(productdto.name());
+		product.setDescription(productdto.description());
+		product.setPrice(productdto.price());
+
+		if (images != null && !images.isEmpty()) {
+			product.getImages().clear();
+
+			for (MultipartFile file : images) {
+				try {
+					ProductImage image = new ProductImage();
+					image.setImageData(file.getBytes());
+					image.setProduct(product);
+					product.getImages().add(image);
+				} catch (Exception e) {
+					throw new RuntimeException("Failed to read image file: " + file.getOriginalFilename(), e);
+				}
+			}
+		}
+		return productRepository.save(product);
+	}
+
+	public void deleteProduct(String productId, String storeManagerId, String realm) {
+		Product product = productRepository.findByIdAndUserId(productId, storeManagerId)
+				.orElseThrow(() -> new RuntimeException("Product not found or access denied"));
+		productRepository.delete(product);
+	}
+
+}

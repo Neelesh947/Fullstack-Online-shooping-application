@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: Shopping-Service
+		
+  datasource:
+    url: jdbc:mysql://mysql:3306/mydb
+    username: neelesh
+    password: neelesh
+    driver-class-name: com.mysql.cj.jdbc.Driver		

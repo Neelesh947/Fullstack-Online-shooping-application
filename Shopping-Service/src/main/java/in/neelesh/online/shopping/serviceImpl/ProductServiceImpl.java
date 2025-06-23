@@ -1,7 +1,6 @@
 package in.neelesh.online.shopping.serviceImpl;
 
 import java.util.Base64;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.kafka.common.Uuid;
@@ -32,6 +31,8 @@ public class ProductServiceImpl implements ProductService {
 		product.setDescription(productdto.description());
 		product.setPrice(productdto.price());
 		product.setUserId(storeManagerId);
+		Integer quantity = productdto.quantity();
+		product.setQuantity((quantity == null || quantity < 1) ? 1 : quantity);
 		product.setId(Uuid.randomUuid().toString());
 
 		if (images != null && !images.isEmpty()) {
@@ -63,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 					.map(Base64.getEncoder()::encodeToString).toList();
 
 			return new ProductResponseDto(product.getId(), product.getName(), product.getDescription(),
-					product.getPrice(), imageBase64List);
+					product.getPrice(), imageBase64List, product.getQuantity());
 		}).toList();
 	}
 
@@ -109,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
 				.map(Base64.getEncoder()::encodeToString).toList();
 
 		ProductResponseDto dto = new ProductResponseDto(product.getId(), product.getName(), product.getDescription(),
-				product.getPrice(), imageBase64List);
+				product.getPrice(), imageBase64List, product.getQuantity());
 
 		return List.of(dto);
 	}

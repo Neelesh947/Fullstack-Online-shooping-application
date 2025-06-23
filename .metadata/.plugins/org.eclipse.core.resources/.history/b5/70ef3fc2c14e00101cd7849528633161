@@ -1,0 +1,5 @@
+package in.neelesh.online.shopping.config;
+
+public class CustomAuthorizationErrorHandler {
+
+}

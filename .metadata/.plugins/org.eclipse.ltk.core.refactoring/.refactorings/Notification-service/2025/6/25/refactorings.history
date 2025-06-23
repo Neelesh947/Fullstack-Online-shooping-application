@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Notification-service/src/main/resources/templates/AccountDeactivationTemplate.html&apos; to &apos;AccountDeletion.html&apos;" description="Rename resource &apos;AccountDeactivationTemplate.html&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/templates/AccountDeactivationTemplate.html" name="AccountDeletion.html" stamp="1749966853860" updateReferences="true"/>
+</session>
