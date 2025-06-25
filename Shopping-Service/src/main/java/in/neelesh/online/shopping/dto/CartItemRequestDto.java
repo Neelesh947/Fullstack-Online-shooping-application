@@ -1,4 +1,7 @@
 package in.neelesh.online.shopping.dto;
 
-public record CartItemRequestDto(String productId, int quantity) {
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
+public record CartItemRequestDto(@NotBlank String productId, @Min(1) int quantity) {
 }

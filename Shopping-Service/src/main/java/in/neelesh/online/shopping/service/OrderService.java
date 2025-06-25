@@ -23,7 +23,7 @@ public interface OrderService {
 	OrderResponseDto updateOrderStatus(String realm, String customerId, String orderId,
 			@NotNull(message = "Status must be provided") OrderStatus status);
 
-	List<OrderResponseDto> getAllOrders(String realm);
+	List<OrderResponseDto> getAllOrders(String realm, String adminId);
 
 	List<OrderResponseDto> getOrdersForStoreManager(String realm, String storeManagerId);
 

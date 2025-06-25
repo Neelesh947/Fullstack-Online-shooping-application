@@ -70,7 +70,8 @@ public class OrderController {
 
 	@GetMapping("/super-admin/all")
 	public ResponseEntity<List<OrderResponseDto>> getAllOrdersForAdmin(@PathVariable String realm) {
-		List<OrderResponseDto> orders = orderService.getAllOrders(realm);
+		String adminId = SecurityUtils.getCurrentUserIdSupplier.get();
+		List<OrderResponseDto> orders = orderService.getAllOrders(realm, adminId);
 		return ResponseEntity.ok(orders);
 	}
 

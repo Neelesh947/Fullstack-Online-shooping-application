@@ -1,5 +1,7 @@
 package in.neelesh.online.shopping.service;
 
+import java.util.List;
+
 import in.neelesh.online.shopping.dto.WishlistResponseDto;
 
 public interface WishlistService {
@@ -9,5 +11,7 @@ public interface WishlistService {
 	void removeProductFromWishlist(String realm, String customerId, String productId);
 
 	WishlistResponseDto getWishlistByCustomerId(String realm, String customerId);
+	
+	public void removeOrderedProductFromWishlist(String customerId, List<String> orderedProductId);
 
 }
