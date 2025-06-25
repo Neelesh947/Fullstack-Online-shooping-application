@@ -1,6 +1,6 @@
 services:
 
-  # PostgreSQL
+  # PostgreSQL (for Keycloak)
   postgres:
     image: postgres:15
     container_name: postgres
@@ -16,7 +16,7 @@ services:
       - backend
     restart: unless-stopped  
 
-  # MySQL
+  # MySQL (main DB for shopping service)
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -29,6 +29,22 @@ services:
       - mysql:/var/lib/mysql   
     ports:
       - "3307:3306"
+    networks:
+      - backend
+
+  # MySQL (separate for payment service)
+  mysql-payment:
+    image: mysql:8.0
+    container_name: mysql-payment
+    environment:
+      MYSQL_ROOT_PASSWORD: paymentRootPass
+      MYSQL_DATABASE: paymentdb
+      MYSQL_USER: paymentUser
+      MYSQL_PASSWORD: paymentPass
+    volumes:
+      - mysql-payment-data:/var/lib/mysql
+    ports:
+      - "3308:3306"
     networks:
       - backend
 
@@ -116,4 +132,5 @@ networks:
 volumes:
   postgres:
   mysql:
+  mysql-payment-data:
   mongo:
