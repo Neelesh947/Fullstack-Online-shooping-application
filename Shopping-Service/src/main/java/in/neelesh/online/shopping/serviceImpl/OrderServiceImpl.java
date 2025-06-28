@@ -50,20 +50,19 @@ public class OrderServiceImpl implements OrderService {
 			product.setQuantity(product.getQuantity() - dtoItem.quantity());
 			productRepository.save(product);
 
-			return OrderItem.builder().productId(product.getId()).quantity(dtoItem.quantity()).price(product.getPrice())
+			return OrderItem.builder().product(product).quantity(dtoItem.quantity()).price(product.getPrice())
 					.order(order).build();
 		}).collect(Collectors.toList());
 
 		order.setItems(items);
 		Order savedOrder = orderRepository.save(order);
 
-		List<String> orderedProductIds = items.stream().map(OrderItem::getProductId).toList();
+		List<String> orderedProductIds = items.stream().map(item -> item.getProduct().getId()).toList();
 
 		wishlistService.removeOrderedProductFromWishlist(customerId, orderedProductIds);
 
 		List<OrderItemResponseDto> itemDtos = savedOrder.getItems().stream()
-				.map(item -> new OrderItemResponseDto(item.getProductId(),
-						productRepository.findById(item.getProductId()).map(Product::getName).orElse(""),
+				.map(item -> new OrderItemResponseDto(item.getProduct().getId(), item.getProduct().getName(),
 						item.getQuantity(), item.getPrice()))
 				.collect(Collectors.toList());
 
@@ -194,15 +193,15 @@ public class OrderServiceImpl implements OrderService {
 			throw new RuntimeException("Access denied: Order does not belong to the customer");
 		}
 
-		List<OrderInvoiceDto.InvoiceItem> invoiceItems = order.getItems().stream()
-				.map(item -> new OrderInvoiceDto.InvoiceItem(item.getProductId(), orderId, item.getQuantity(),
-						item.getPrice(), item.getPrice()))
-				.toList();
+		List<OrderInvoiceDto.InvoiceItem> invoiceItems = order.getItems().stream().map(item -> {
+			double totalPrice = item.getPrice() * item.getQuantity();
+			return new OrderInvoiceDto.InvoiceItem(item.getProduct().getId(), orderId, item.getQuantity(),
+					item.getPrice(), totalPrice);
+		}).toList();
 
 		double totalAmount = invoiceItems.stream().mapToDouble(OrderInvoiceDto.InvoiceItem::total).sum();
 
 		return new OrderInvoiceDto(order.getId(), order.getCreateDateTime().toLocalDateTime().toLocalDate(), customerId,
 				invoiceItems, totalAmount, order.getStatus().name());
 	}
-
 }

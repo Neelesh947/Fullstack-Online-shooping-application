@@ -1,5 +1,5 @@
 package in.neelesh.online.shopping.dto;
 
-public record OtpNotificationRequest(String customerId, String otp) {
+public record OtpNotificationRequest(String customerId, String otp, String email, String customerName) {
 
 }

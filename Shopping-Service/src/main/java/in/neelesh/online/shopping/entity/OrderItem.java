@@ -20,10 +20,7 @@ import lombok.Setter;
 public class OrderItem extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
-	
-	@Column(nullable = false)
-	private String productId;
-	
+		
 	@Column(nullable = false)
 	private int quantity;
 	
@@ -33,4 +30,8 @@ public class OrderItem extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
 }

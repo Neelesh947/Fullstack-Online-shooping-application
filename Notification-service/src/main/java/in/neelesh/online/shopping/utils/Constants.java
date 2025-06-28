@@ -30,5 +30,6 @@ public final class Constants {
 	public static final String USER_CRETAED_CONFIRMATION = "UserCreatedConfirmation";
 	public static final String WELCOME_CONFIRMATION = "WelcomeConfirmation";
 	public static final String ACCOUNT_DEACTIVATION = "AccountDeletion";
+	public static final String SEND_OTP = "SendOtp";
 
 }

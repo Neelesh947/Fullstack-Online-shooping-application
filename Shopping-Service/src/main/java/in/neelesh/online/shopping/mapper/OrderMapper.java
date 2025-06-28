@@ -19,6 +19,6 @@ public class OrderMapper {
 	}
 
 	public static OrderItemResponseDto toDto(OrderItem item) {
-		return new OrderItemResponseDto(item.getProductId(), item.getId(), item.getQuantity(), item.getPrice());
+		return new OrderItemResponseDto(item.getProduct().getId(), item.getId(), item.getQuantity(), item.getPrice());
 	}
 }
