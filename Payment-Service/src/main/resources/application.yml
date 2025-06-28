@@ -14,9 +14,9 @@ spring:
           paymentEvent: in.neelesh.online.payment.records.PaymentEvent
 
   datasource:
-    url: jdbc:mysql://localhost:3307/paymentdb   # Use your payment DB
-    username: payment_user                        # Use your payment DB user
-    password: payment_password                    # Use your payment DB password
+    url: jdbc:mysql://localhost:3308/paymentdb   # Use your payment DB
+    username: paymentUser                        # Use your payment DB user
+    password: paymentPass                    # Use your payment DB password
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
