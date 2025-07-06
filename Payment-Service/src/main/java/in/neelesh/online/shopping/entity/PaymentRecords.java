@@ -46,7 +46,7 @@ public class PaymentRecords extends BaseEntity {
 	private PaymentGatewayConfigEntity paymentGatewayConfigEntity;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "payment_mode", nullable = false)
+	@Column(name = "payment_mode")
 	private PaymentMode paymentMode;
 
 	@NotNull(message = "Amount is required")

@@ -67,7 +67,6 @@ public class PaymentsServiceImpl implements PaymentsService {
 			PaymentRecords record = PaymentRecords.builder().paymentGateway(PaymentGateway.RAZORPAY)
 					.amountInPaise(request.amountInPaise()).cartId(request.cartId()).userId(request.customerId())
 					.paymentStatus(PaymentStatus.CREATED)
-					.paymentMode(PaymentMode.valueOf(request.paymentMode().toUpperCase()))
 					.paymentReferenceUrl(order.get("id")).build();
 
 			paymentRecordsRepository.save(record);

@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.razorpay.Payment;
 
 import in.neelesh.online.shopping.entity.PaymentRecords;
 import in.neelesh.online.shopping.enums.PaymentMode;
@@ -85,7 +84,6 @@ public class WebhookServiceImpl implements WebhookService {
 			return;
 		}
 
-		// Update payment record details
 		paymentRecord.setExternalPaymentId(paymentId);
 		paymentRecord.setPaymentStatus(PaymentStatus.SUCCESS);
 		paymentRecord.setAmountInPaise((int) amount); // cast as needed
@@ -93,7 +91,6 @@ public class WebhookServiceImpl implements WebhookService {
 		paymentRecord.setPaymentMode(method != null ? mapToPaymentMode(method) : null);
 
 		paymentRecordsRepository.save(paymentRecord);
-		// save in DB toDO
 	}
 
 	private void handlePaymentFailed(JsonNode rootNode) {
@@ -112,10 +109,8 @@ public class WebhookServiceImpl implements WebhookService {
 
 		paymentRecord.setExternalPaymentId(paymentId);
 		paymentRecord.setPaymentStatus(PaymentStatus.FAILED);
-		// You can save errorReason somewhere if your entity supports it.
 
 		paymentRecordsRepository.save(paymentRecord);
-		// save in DB toDOa
 	}
 
 	private void handleOrderPaid(JsonNode rootNode) {
@@ -131,7 +126,6 @@ public class WebhookServiceImpl implements WebhookService {
 		} else {
 			log.warn("Payment record not found for razorpayOrderId: {}", razorpayOrderId);
 		}
-		// save in DB toDO
 	}
 
 	private PaymentMode mapToPaymentMode(String method) {
