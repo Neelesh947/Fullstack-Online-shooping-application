@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Home - Shopping Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Shopping<span>Portal</span></div>
+    <nav>
+      <a href="homepage">Home</a>
+      <a href="#">Categories</a>
+      <a href="cart-item">Cart</a>
+      <a href="#">Orders</a>
+      <a href="#">Profile</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Home Content -->
+  <div class="home-container">
+    <header class="home-header">
+      <h1>Welcome to Our Store</h1>
+      <div class="filters">
+        <select [(ngModel)]="selectedCategory" (change)="onCategoryChange(selectedCategory)">
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+
+        <input
+          type="search"
+          placeholder="Search products..."
+          [(ngModel)]="searchQuery"
+          (input)="onSearchChange(searchQuery)"
+        />
+      </div>
+    </header>
+
+    <section class="product-list">
+      <div *ngIf="filteredProducts.length === 0" class="no-results">No products found.</div>
+
+      <div class="product-card" *ngFor="let product of filteredProducts">
+        <img [src]="product.imageUrl" [alt]="product.name" />
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <div class="price">₹{{ product.price | number }}</div>
+        <div class="quantity">Available: {{ product.quantity }}</div>
+        <button (click)="addToCart(product.id)">Add to Cart</button>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<div class="card-payment-container" [formGroup]="cardForm">
+  <h3>Pay with Card</h3>
+
+  <form (ngSubmit)="onSubmit()" novalidate>
+    <!-- Card Number -->
+    <div class="form-group">
+      <label for="cardNumber">Card Number</label>
+      <input id="cardNumber" type="text" formControlName="cardNumber" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" (input)="onCardNumberInput()" />
+      <div class="card-brand" *ngIf="cardBrand">{{ cardBrand }}</div>
+      <div class="error" *ngIf="cardForm.controls['cardNumber'].touched && cardForm.controls['cardNumber'].invalid">
+        {{ getCardNumberError() }}
+      </div>
+    </div>
+
+    <!-- Cardholder Name -->
+    <div class="form-group">
+      <label for="cardHolder">Cardholder Name</label>
+      <input id="cardHolder" type="text" formControlName="cardHolder" placeholder="Name on card" />
+      <div class="error" *ngIf="cardForm.controls['cardHolder'].touched && cardForm.controls['cardHolder'].invalid">
+        Cardholder name is required
+      </div>
+    </div>
+
+    <!-- Expiry Date -->
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label for="expiryMonth">Expiry Month</label>
+        <select id="expiryMonth" formControlName="expiryMonth">
+          <option value="" disabled selected>MM</option>
+          <option *ngFor="let m of months" [value]="m">{{ m < 10 ? '0' + m : m }}</option>
+        </select>
+      </div>
+
+      <div class="form-group half-width">
+        <label for="expiryYear">Expiry Year</label>
+        <select id="expiryYear" formControlName="expiryYear">
+          <option value="" disabled selected>YY</option>
+          <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="error" *ngIf="expiryInvalid">
+      Expiry date is invalid or expired
+    </div>
+
+    <!-- CVV -->
+    <div class="form-group">
+      <label for="cvv">CVV</label>
+      <input id="cvv" type="password" maxlength="4" formControlName="cvv" placeholder="CVV" />
+      <div class="error" *ngIf="cardForm.controls['cvv'].touched && cardForm.controls['cvv'].invalid">
+        CVV is required and must be 3 or 4 digits
+      </div>
+    </div>
+
+    <!-- Send OTP Button -->
+    <div class="form-group otp-section" *ngIf="!otpSent">
+      <button type="button" class="btn-send-otp" [disabled]="!cardForm.valid || expiryInvalid" (click)="sendOtp()">Send OTP</button>
+    </div>
+
+    <!-- OTP Input Section -->
+    <div *ngIf="otpSent" class="otp-section">
+      <p>OTP sent to your registered mobile number: +91*****1234</p>
+
+      <input
+        type="text"
+        maxlength="6"
+        [(ngModel)]="otp"
+        placeholder="Enter OTP"
+        (input)="onOtpInput()"
+        [disabled]="otpVerified"
+      />
+      <button type="button" class="btn-verify-otp" [disabled]="otp.length !== 6 || otpVerified" (click)="verifyOtp()">Verify OTP</button>
+
+      <div *ngIf="otpError" class="error">{{ otpError }}</div>
+      <div *ngIf="otpVerified" class="success">OTP verified successfully!</div>
+
+      <div class="countdown-timer">
+        Time left to enter OTP: {{ countdown }}s
+      </div>
+      <button type="button" class="btn-resend" [disabled]="countdown > 0" (click)="resendOtp()">Resend OTP</button>
+    </div>
+
+    <!-- Pay Now Button -->
+    <div class="form-group">
+      <button type="submit" class="btn-pay" [disabled]="!otpVerified">Pay Now</button>
+    </div>
+  </form>
+</div>

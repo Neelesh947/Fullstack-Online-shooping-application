@@ -1,0 +1,88 @@
+.manage-users-container {
+  padding: 2rem;
+  background: #f7f9fc;
+  min-height: 100vh;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.search-box {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.user-table th,
+.user-table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #0077ff;
+  color: white;
+}
+
+.active {
+  color: green;
+  font-weight: 600;
+}
+
+.suspended {
+  color: red;
+  font-weight: 600;
+}
+
+.action-button {
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.status-toggle {
+  background-color: #ffaa00;
+  color: white;
+}
+
+.status-toggle:hover {
+  background-color: #e69500;
+}
+
+.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .user-table {
+    font-size: 0.85rem;
+  }
+
+  .search-box {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,23 @@
+<div class="profile-container">
+  <h1>User Profile</h1>
+
+  <div class="profile-info">
+    <div class="field">
+      <label>Name:</label>
+      <span>{{ user.name }}</span>
+    </div>
+    <div class="field">
+      <label>Email:</label>
+      <span>{{ user.email }}</span>
+    </div>
+    <div class="field">
+      <label>Phone:</label>
+      <span>{{ user.phone }}</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button (click)="navigateToEdit()">Edit Information</button>
+    <button class="secondary" (click)="navigateToChangePassword()">Change Password</button>
+  </div>
+</div>

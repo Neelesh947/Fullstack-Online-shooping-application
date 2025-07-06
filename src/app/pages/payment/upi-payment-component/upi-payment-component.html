@@ -1,0 +1,55 @@
+<div class="upi-payment-container" [formGroup]="upiForm">
+  <h3>Pay with UPI</h3>
+
+  <form (ngSubmit)="onSubmit()" novalidate>
+    <!-- UPI ID Input -->
+    <div class="form-group">
+      <label for="upiId">UPI ID</label>
+      <input
+        id="upiId"
+        type="text"
+        formControlName="upiId"
+        placeholder="example@bank"
+        autocomplete="off"
+      />
+      <div class="error" *ngIf="upiForm.controls['upiId'].touched && upiForm.controls['upiId'].invalid">
+        {{ getUpiIdError() }}
+      </div>
+    </div>
+
+    <!-- QR Code Display -->
+    <div *ngIf="upiForm.valid && !loading && !success" class="qr-code">
+      <img [src]="qrCodeUrl" alt="UPI QR Code" />
+      <p>Scan QR to pay</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      Waiting for approval...
+      <span class="spinner"></span>
+    </div>
+
+    <!-- Success State -->
+    <div *ngIf="success" class="success-state">
+      Payment successful! 🎉
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-group buttons">
+      <button type="submit" [disabled]="upiForm.invalid || loading || success">Pay Now</button>
+      <button
+        type="button"
+        *ngIf="error"
+        (click)="retry()"
+        class="btn-retry"
+      >
+        Retry
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,123 @@
+.customer-management {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.search-box {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 1.5rem auto;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.search-box:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.customer-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.customer-table th,
+.customer-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.customer-table thead {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn {
+  padding: 0.3rem 0.7rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.edit-btn {
+  background-color: #17a2b8;
+  color: white;
+  margin-right: 0.5rem;
+}
+
+.edit-btn:hover {
+  background-color: #138496;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.no-data {
+  text-align: center;
+  color: #666;
+  padding: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .customer-table,
+  .customer-table thead,
+  .customer-table tbody,
+  .customer-table th,
+  .customer-table td,
+  .customer-table tr {
+    display: block;
+  }
+
+  .customer-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .customer-table tr {
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .customer-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .customer-table td::before {
+    position: absolute;
+    left: 1rem;
+    top: 0.75rem;
+    white-space: nowrap;
+    font-weight: 700;
+    content: attr(data-label);
+    text-align: left;
+  }
+}

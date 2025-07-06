@@ -1,0 +1,137 @@
+.card-payment-container {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-family: Arial, sans-serif;
+}
+
+h3 {
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.half-width {
+  flex: 1;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #555;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.error {
+  color: #d93025;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.success {
+  color: #2e7d32;
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+  font-weight: 600;
+}
+
+.card-brand {
+  margin-top: 0.4rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.btn-send-otp {
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+}
+
+.btn-send-otp:disabled {
+  background-color: #9ac7ff;
+  cursor: not-allowed;
+}
+
+.btn-verify-otp {
+  background-color: #28a745;
+  color: white;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-verify-otp:disabled {
+  background-color: #a1d6a1;
+  cursor: not-allowed;
+}
+
+.btn-resend {
+  background-color: #ffc107;
+  color: #333;
+  margin-top: 0.6rem;
+  width: 100%;
+}
+
+.btn-resend:disabled {
+  background-color: #ffe082;
+  cursor: not-allowed;
+}
+
+.btn-pay {
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+}
+
+.btn-pay:disabled {
+  background-color: #9ac7ff;
+  cursor: not-allowed;
+}
+
+.otp-section {
+  margin-top: 1rem;
+}
+
+.countdown-timer {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #555;
+}

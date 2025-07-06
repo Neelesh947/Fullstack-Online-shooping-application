@@ -1,0 +1,46 @@
+<div class="container">
+
+  <h2>Manage Roles</h2>
+
+  <div class="roles-list">
+    <h3>Roles</h3>
+    <ul>
+      <li
+        *ngFor="let role of roles"
+        (click)="selectRole(role)"
+        [class.selected]="role === selectedRole"
+      >
+        <strong>{{ role.name }}</strong> - {{ role.description }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="role-editor" *ngIf="selectedRole">
+    <h3>Edit Role: {{ selectedRole.name }}</h3>
+
+    <label>
+      Name:
+      <input type="text" [(ngModel)]="selectedRole.name" />
+    </label>
+
+    <label>
+      Description:
+      <textarea rows="3" [(ngModel)]="selectedRole.description"></textarea>
+    </label>
+
+    <label>
+      Permissions (comma separated):
+      <input
+        type="text"
+        [value]="selectedRole.permissions.join(', ')"
+        (input)="updatePermissions($event)"
+        />
+    </label>
+
+    <div class="buttons">
+      <button (click)="saveRole()">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+</div>

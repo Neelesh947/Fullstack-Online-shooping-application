@@ -17,6 +17,7 @@
       <h3 class="product-name">{{ product.name }}</h3>
       <p class="product-desc">{{ product.description }}</p>
       <p class="product-price">Price: ${{ product.price | number:'1.2-2' }}</p>
+      <p class="product-price">Quantity: {{ product.quantity}}</p>
 
       <div class="image-slider" *ngIf="product.images && product.images.length > 0">
         <img
@@ -38,7 +39,7 @@
 
       <div class="product-actions">
         <a [routerLink]="['/store-edit-product-dashboard', product.id]" class="action-link">Edit</a>
-        <a href="#" class="action-link delete-link">Delete</a>
+        <a (click)="onDeleteProduct(product.id!, i)" class="action-link delete-link">Delete</a>
       </div>
     </div>
   </div>

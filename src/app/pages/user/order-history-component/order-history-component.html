@@ -1,0 +1,34 @@
+<div class="order-history-container">
+  <h2>My Orders</h2>
+
+  <table *ngIf="orders.length > 0" class="order-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Total (₹)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.date | date: 'mediumDate' }}</td>
+        <td>
+          <span class="status" [ngClass]="order.status.toLowerCase()">
+            {{ order.status }}
+          </span>
+        </td>
+        <td>{{ order.totalAmount }}</td>
+        <td>
+          <button (click)="viewOrderDetails(order.id)">View Details</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="orders.length === 0" class="empty">
+    No orders found.
+  </div>
+</div>

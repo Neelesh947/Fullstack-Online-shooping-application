@@ -1,0 +1,32 @@
+<div class="reports-container">
+  <h2>Platform Reports</h2>
+
+  <section class="summary-cards">
+    <div
+      class="card"
+      *ngFor="let report of reports"
+      [style.backgroundColor]="report.bgColor"
+    >
+      <div class="icon">{{ report.icon }}</div>
+      <div class="details">
+        <div class="value">{{ report.value }}</div>
+        <div class="label">{{ report.label }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sales-chart-section">
+    <h3>Sales Over Time</h3>
+    <div class="chart">
+      <div
+        class="bar"
+        *ngFor="let data of salesOverTime"
+        [style.height]="(data.sales / 2000) + 'px'"
+        title="{{ data.month }} - ₹{{ data.sales | number }}"
+      >
+        <span class="month">{{ data.month }}</span>
+        <span class="amount">₹{{ data.sales | number }}</span>
+      </div>
+    </div>
+  </section>
+</div>

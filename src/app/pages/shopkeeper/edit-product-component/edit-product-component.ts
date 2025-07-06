@@ -12,9 +12,12 @@ export class EditProductComponent implements OnInit{
 
   productId: string = '';
   product: ProductDto ={
+    id: '',
     name: '',
     description:'',
-    price: 0
+    price: 0,
+    quantity: 1,
+    images: [],
   }
 
   images: File[] = [];
@@ -23,10 +26,15 @@ export class EditProductComponent implements OnInit{
 
   ngOnInit(): void {
     this.productId = this.route.snapshot.params['productId'];
+    console.log(this.productId);
     if(this.productId){
       this.productService.getProductById(this.productId).subscribe({
         next: (data) =>{
-          this.product = data;
+          let parsed = data;
+        if (typeof data === 'string') {
+          parsed = JSON.parse(data);
+        }
+          this.product = parsed[0];
           console.log(this.product);
         },
         error: (err) =>{
@@ -56,5 +64,4 @@ export class EditProductComponent implements OnInit{
       }
     });
   }
-
 }

@@ -1,0 +1,53 @@
+<div class="sales-report-container">
+  <h2>Sales Report</h2>
+
+  <div class="filters">
+    <label for="dateRange">Date Range:</label>
+    <select id="dateRange" [value]="dateRange" (change)="onDateRangeChange($event)">
+      <option value="today">Today</option>
+      <option value="last7days">Last 7 Days</option>
+      <option value="last30days">Last 30 Days</option>
+      <option value="custom">Custom</option>
+    </select>
+  </div>
+
+  <div class="summary-cards">
+    <div class="card">
+      <h3>Total Sales</h3>
+      <p>{{ totalSales }}</p>
+    </div>
+    <div class="card">
+      <h3>Total Orders</h3>
+      <p>{{ totalOrders }}</p>
+    </div>
+    <div class="card">
+      <h3>Total Revenue</h3>
+      <p>₹ {{ totalRevenue | number:'1.0-0' }}</p>
+    </div>
+  </div>
+
+  <section class="chart-placeholder">
+    <!-- Replace with actual charts like Chart.js or ngx-charts -->
+    <p><i>Chart placeholder for sales trends</i></p>
+  </section>
+
+  <section class="top-products">
+    <h3>Top Selling Products</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity Sold</th>
+          <th>Revenue (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of topProducts">
+          <td>{{ product.productName }}</td>
+          <td>{{ product.quantitySold }}</td>
+          <td>₹ {{ product.revenue | number:'1.0-0' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

@@ -1,0 +1,40 @@
+<div class="analytics-container">
+  <h2>📊 Store Analytics</h2>
+
+  <div class="kpi-cards">
+    <div class="card">
+      <h3>₹ {{ stats.totalSales | number }}</h3>
+      <p>Total Sales</p>
+    </div>
+    <div class="card">
+      <h3>{{ stats.totalOrders }}</h3>
+      <p>Total Orders</p>
+    </div>
+    <div class="card">
+      <h3>{{ stats.totalProducts }}</h3>
+      <p>Products in Store</p>
+    </div>
+    <div class="card">
+      <h3>{{ stats.totalCustomers }}</h3>
+      <p>Unique Customers</p>
+    </div>
+  </div>
+
+  <div class="top-products">
+    <h3>🔥 Top Selling Products</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Sales (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of topProducts">
+          <td>{{ product.name }}</td>
+          <td>₹ {{ product.sales | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

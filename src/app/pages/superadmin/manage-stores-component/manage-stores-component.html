@@ -1,0 +1,44 @@
+<div class="manage-stores-container">
+  <h2>Manage Stores</h2>
+
+  <input
+    type="text"
+    placeholder="Search by store name or email"
+    [(ngModel)]="search"
+    class="search-box"
+  />
+
+  <table class="stores-table">
+    <thead>
+      <tr>
+        <th>Store ID</th>
+        <th>Store Name</th>
+        <th>Owner</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let store of filteredStores">
+        <td>{{ store.id }}</td>
+        <td>{{ store.name }}</td>
+        <td>{{ store.owner }}</td>
+        <td>{{ store.email }}</td>
+        <td>
+          <span [ngClass]="{ 'active': store.status === 'Active', 'suspended': store.status === 'Suspended' }">
+            {{ store.status }}
+          </span>
+        </td>
+        <td>
+          <button class="btn status-toggle" (click)="toggleStatus(store)">
+            {{ store.status === 'Active' ? 'Suspend' : 'Activate' }}
+          </button>
+          <button class="btn delete" (click)="removeStore(store.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

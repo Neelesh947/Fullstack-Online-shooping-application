@@ -11,6 +11,7 @@ export interface ProductDto{
   description: string;
   price: number;
   images?: string[];
+  quantity: number;
 }
 
 @Injectable({
@@ -70,5 +71,10 @@ export class Product {
       headers: this.getAuthHeaders(),
       responseType: 'text'
     });
+  }
+
+  public getListOfAllProduct() : Observable<ProductDto[]>{
+    return this.http.get<ProductDto[]>(`${base_url}/product/all-product`, {
+      headers: this.getAuthHeaders()});
   }
 }

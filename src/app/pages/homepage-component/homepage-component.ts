@@ -23,7 +23,6 @@ export class HomepageComponent implements OnInit{
 
   ngOnInit(): void {
     const userDetails = this.tokenService.getUserDetails();
-
     if(userDetails){
       this.userId = userDetails.sub;
     }

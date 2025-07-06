@@ -1,0 +1,22 @@
+<div class="wishlist-container">
+  <h2>My Wishlist</h2>
+
+  <div *ngIf="wishlistItems.length === 0" class="empty">
+    💔 Your wishlist is empty.
+  </div>
+
+  <div *ngFor="let item of wishlistItems" class="wishlist-item">
+    <img [src]="item.image" alt="{{ item.name }}" />
+
+    <div class="details">
+      <h3>{{ item.name }}</h3>
+      <p>₹{{ item.price }}</p>
+
+      <div class="actions">
+        <button (click)="viewDetails(item.id)">View</button>
+        <button (click)="addToCart(item.id)">Add to Cart</button>
+        <button class="remove" (click)="removeFromWishlist(item.id)">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>

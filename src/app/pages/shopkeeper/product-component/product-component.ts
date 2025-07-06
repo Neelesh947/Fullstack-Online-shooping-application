@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Product, ProductDto } from '../../../services/product';
 import { LoginSerice } from '../../../services/login-serice';
 import { TokenService } from '../../../services/token-service';
 import { Router } from '@angular/router';
+import { SweetAlertService } from '../../../services/sweet-alert-service';
+import { Product, ProductDto } from '../../../services/product';
 
 @Component({
   selector: 'app-product-component',
@@ -21,7 +22,8 @@ export class ProductComponent implements OnInit{
 
   constructor(private product: Product,private authService: LoginSerice,
         private tokenService: TokenService,
-        private router: Router){}
+        private router: Router,
+      private alert: SweetAlertService){}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -37,7 +39,7 @@ export class ProductComponent implements OnInit{
         this.currentImageIndex = new Array(this.products.length).fill(0);
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.error = 'Failed to load products';
         console.error(err);
         this.loading = false;
@@ -65,5 +67,24 @@ export class ProductComponent implements OnInit{
       }
     });
   }
+
+  onDeleteProduct(productId: string, index: number): void {
+  this.alert.confirmDelete().then(confirmed => {
+    if (!confirmed) return;
+
+    this.product.deleteProduct(productId).subscribe({
+      next: () => {
+        this.products.splice(index, 1); 
+        this.currentImageIndex.splice(index, 1); 
+        this.alert.success('Product deleted successfully!');
+      },
+      error: (error: any) => {
+        console.error('Failed to delete product:', error);
+        this.alert.error('Failed to delete product. Please try again later.');
+      }
+    });
+  });
+}
+
 
 }

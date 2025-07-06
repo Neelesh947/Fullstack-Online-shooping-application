@@ -1,0 +1,135 @@
+.order-management-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #222;
+  font-weight: 700;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.controls input[type="text"] {
+  flex-grow: 1;
+  min-width: 250px;
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.controls input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+
+.controls select {
+  width: 180px;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.controls select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 700px;
+}
+
+thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+th, td {
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-tag {
+  padding: 0.3rem 0.7rem;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  display: inline-block;
+  color: #fff;
+}
+
+.status-tag.pending { background-color: #ffc107; }
+.status-tag.processing { background-color: #17a2b8; }
+.status-tag.shipped { background-color: #007bff; }
+.status-tag.delivered { background-color: #28a745; }
+.status-tag.cancelled { background-color: #dc3545; }
+
+.status-select {
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-width: 110px;
+  transition: border-color 0.3s ease;
+}
+
+.status-select:hover {
+  border-color: #007bff;
+}
+
+.no-results {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+@media (max-width: 700px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls input[type="text"],
+  .controls select {
+    width: 100%;
+    max-width: none;
+  }
+
+  table {
+    min-width: 600px;
+  }
+}

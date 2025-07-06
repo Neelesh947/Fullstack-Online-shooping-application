@@ -1,0 +1,17 @@
+<div class="store-profile-container">
+  <h2>Store Profile</h2>
+
+  <div class="store-info-card">
+    <div><strong>Store Name:</strong> {{ store.name }}</div>
+    <div><strong>Email:</strong> {{ store.email }}</div>
+    <div><strong>Phone:</strong> {{ store.phone }}</div>
+    <div><strong>Address:</strong> {{ store.address }}</div>
+    <div><strong>GST Number:</strong> {{ store.gstNumber }}</div>
+    <div><strong>Established On:</strong> {{ store.established | date }}</div>
+  </div>
+
+  <div class="actions">
+    <button (click)="editProfile()">✏️ Edit Profile</button>
+    <button (click)="changePassword()">🔐 Change Password</button>
+  </div>
+</div>

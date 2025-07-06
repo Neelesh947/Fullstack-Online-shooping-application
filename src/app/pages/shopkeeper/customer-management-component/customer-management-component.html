@@ -1,0 +1,40 @@
+<div class="customer-management">
+  <h2>Customer Management</h2>
+
+  <input
+    type="text"
+    placeholder="Search by name, email or phone..."
+    [(ngModel)]="searchTerm"
+    (input)="search()"
+    class="search-box"
+  />
+
+  <table class="customer-table">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Registered Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of filteredCustomers">
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.registeredDate | date:'mediumDate' }}</td>
+        <td>
+          <button class="btn edit-btn">Edit</button>
+          <button class="btn delete-btn" (click)="deleteCustomer(customer.id)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="filteredCustomers.length === 0">
+        <td colspan="6" class="no-data">No customers found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,58 @@
+<div class="cart-container">
+  
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Shopping<span>Portal</span></div>
+    <nav>
+      <a href="homepage">Home</a>
+      <a href="#">Categories</a>
+      <a href="cart-item">Cart</a>
+      <a href="#">Orders</a>
+      <a href="#">Profile</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+
+  <!-- Back Button -->
+<div class="back-button">
+  <button (click)="goBack()">← Back</button>
+</div>
+
+
+  <!-- Title -->
+  <h2 class="cart-title">🛒 Your Shopping Cart</h2>
+
+  <!-- Empty Cart Message -->
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <p>Your cart is empty. Start adding some products!</p>
+  </div>
+
+  <!-- Cart Items -->
+  <div *ngIf="cartItems.length > 0" class="cart-items">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <img [src]="item.imageId" [alt]="item.imageId" class="product-image" />
+      <div class="item-info">
+        <h4>{{ item.productName }}</h4>
+        <p>Price: ₹{{ item.price }}</p>
+
+        <div class="quantity-control">
+          <button (click)="updateQuantity(item, -1)">−</button>
+          <span>{{ item.quantity }}</span>
+          <button (click)="updateQuantity(item, 1)">+</button>
+        </div>
+
+        <div class="item-actions">
+          <button class="remove-btn" (click)="removeItem(item.productId)">Remove</button>
+          <button class="wishlist-btn" (click)="moveToWishlist(item)">Move to Wishlist</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="cart-summary">
+      <h3>Total: ₹{{ totalPrice }}</h3>
+      <button class="checkout-btn" (click)="checkout()">Checkout</button>
+      <button class="clear-btn" (click)="clearCart()">Clear Cart</button>
+    </div>
+  </div>
+</div>

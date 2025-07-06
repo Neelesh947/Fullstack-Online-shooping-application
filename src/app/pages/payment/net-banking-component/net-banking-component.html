@@ -1,0 +1,41 @@
+<div class="netbanking-payment-container" [formGroup]="netBankingForm">
+  <h3>Pay via Net Banking</h3>
+
+  <form (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="bank">Select Your Bank</label>
+      <select id="bank" formControlName="bank">
+        <option value="" disabled>Select your bank</option>
+        <option *ngFor="let bank of banks" [value]="bank.value">
+          {{ bank.display }}
+        </option>
+      </select>
+      <div class="error" *ngIf="netBankingForm.controls['bank'].touched && netBankingForm.controls['bank'].invalid">
+        Please select a bank.
+      </div>
+    </div>
+
+    <div *ngIf="submitted && !paymentDone" class="warning">
+      ⚠️ Please do not refresh or close the page while redirected to the bank.
+    </div>
+
+    <div *ngIf="paymentDone && paymentStatus === 'success'" class="status success">
+      Payment successful! 🎉
+    </div>
+    <div *ngIf="paymentDone && paymentStatus === 'failure'" class="status failure">
+      Payment failed. Please try again or select another bank.
+    </div>
+
+    <div class="form-group buttons">
+      <button
+        type="submit"
+        [disabled]="netBankingForm.invalid || (submitted && !paymentDone)"
+      >
+        Pay Now
+      </button>
+      <button *ngIf="paymentDone" type="button" class="btn-retry" (click)="reset()">
+        New Payment
+      </button>
+    </div>
+  </form>
+</div>

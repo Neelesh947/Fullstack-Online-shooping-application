@@ -11,6 +11,9 @@ import { ShopkeeperDashboardComponent } from './pages/shopkeeper/shopkeeper-dash
 import { ProductComponent } from './pages/shopkeeper/product-component/product-component';
 import { AddProductComponent } from './pages/shopkeeper/add-product-component/add-product-component';
 import { EditProductComponent } from './pages/shopkeeper/edit-product-component/edit-product-component';
+import { HomePageComponent } from './pages/user/home-page-component/home-page-component';
+import { CartComponent } from './pages/user/cart-component/cart-component';
+import { Payment } from './pages/payment/payment/payment';
 
 const routes: Routes = [
   {
@@ -76,6 +79,24 @@ const routes: Routes = [
   {
     path:"store-edit-product-dashboard/:productId",
     component: EditProductComponent,
+    pathMatch:"full"
+
+  },
+  {
+    path:"user-product-list",
+    component: HomePageComponent,
+    pathMatch:"full"
+
+  },
+  {
+    path:"cart-item",
+    component: CartComponent,
+    pathMatch:"full"
+
+  },
+  {
+    path:"payment",
+    component: Payment,
     pathMatch:"full"
 
   }

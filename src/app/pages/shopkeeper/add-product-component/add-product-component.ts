@@ -14,6 +14,7 @@ export class AddProductComponent implements OnInit{
     name: '',
     description: '',
     price: 0,
+    quantity: 0
   };
 
   selectedFiles: File[] = [];
@@ -54,7 +55,7 @@ export class AddProductComponent implements OnInit{
         this.successMessage = 'Product created successfully!';
         this.submitting = false;
         // Reset form
-        this.product = { name: '', description: '', price: 0 };
+        this.product = { name: '', description: '', price: 0, quantity:1 };
         this.selectedFiles = [];
         this.router.navigate(['/store-product-dashboard']);
       },

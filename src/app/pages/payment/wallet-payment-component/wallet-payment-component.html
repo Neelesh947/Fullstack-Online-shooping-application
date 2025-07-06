@@ -1,0 +1,50 @@
+<div class="wallet-payment-container" [formGroup]="walletForm">
+  <h3>Pay with Wallet</h3>
+
+  <form (ngSubmit)="onSubmit()" novalidate>
+    <!-- Wallet Selection -->
+    <div class="form-group">
+      <label for="wallet">Select Wallet</label>
+      <select id="wallet" formControlName="wallet">
+        <option value="" disabled>Select your wallet</option>
+        <option *ngFor="let w of wallets" [value]="w.value">{{ w.display }}</option>
+      </select>
+      <div class="error" *ngIf="walletForm.controls['wallet'].touched && walletForm.controls['wallet'].invalid">
+        Wallet selection is required.
+      </div>
+    </div>
+
+    <!-- Mobile or Email Input -->
+    <div class="form-group">
+      <label for="contact">Mobile or Email</label>
+      <input
+        id="contact"
+        type="text"
+        formControlName="contact"
+        placeholder="Enter mobile number or email"
+        autocomplete="off"
+      />
+      <div class="error" *ngIf="walletForm.controls['contact'].touched && walletForm.controls['contact'].invalid">
+        {{ getContactError() }}
+      </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div *ngIf="status === 'pending'" class="status pending">
+      Payment pending... Please complete payment on your wallet app.
+      <span class="spinner"></span>
+    </div>
+    <div *ngIf="status === 'success'" class="status success">
+      Payment successful! 🎉
+    </div>
+    <div *ngIf="status === 'failure'" class="status failure">
+      Payment failed. Please try again.
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-group buttons">
+      <button type="submit" [disabled]="walletForm.invalid || status === 'pending' || status === 'success'">Pay Now</button>
+      <button *ngIf="status === 'failure'" type="button" class="btn-retry" (click)="retry()">Retry</button>
+    </div>
+  </form>
+</div>

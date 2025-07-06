@@ -1,0 +1,46 @@
+<div class="order-details-container" *ngIf="order">
+  <h2>Order Details</h2>
+
+  <div class="summary">
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Date:</strong> {{ order.date | date: 'medium' }}</p>
+    <p>
+      <strong>Status:</strong>
+      <span class="status" [ngClass]="order.status.toLowerCase()">
+        {{ order.status }}
+      </span>
+    </p>
+    <p><strong>Shipping Address:</strong> {{ order.shippingAddress }}</p>
+  </div>
+
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Price (₹)</th>
+        <th>Subtotal (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of order.items">
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.subtotal }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="total">
+    <strong>Total Amount: ₹{{ order.totalAmount }}</strong>
+  </div>
+
+  <div class="actions">
+    <button (click)="reorder()">Reorder</button>
+  </div>
+</div>
+
+<div *ngIf="!order" class="loading">
+  Loading order details...
+</div>

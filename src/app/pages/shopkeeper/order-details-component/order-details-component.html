@@ -1,0 +1,43 @@
+<div class="order-details-container" *ngIf="order">
+  <h2>Order Details - #{{ order.id }}</h2>
+
+  <section class="order-meta">
+    <p><strong>Customer ID:</strong> {{ order.customerId }}</p>
+    <p><strong>Status:</strong> <span class="status">{{ order.status }}</span></p>
+    <p><strong>Order Date:</strong> {{ order.createDateTime | date:'medium' }}</p>
+    <p><strong>Last Updated:</strong> {{ order.updateDateTime | date:'medium' }}</p>
+  </section>
+
+  <section class="shipping-address">
+    <h3>Shipping Address</h3>
+    <p>{{ order.shippingAddress }}</p>
+  </section>
+
+  <section class="order-items">
+    <h3>Items</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price (₹)</th>
+          <th>Total (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of order.items">
+          <td>{{ item.productName }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price | number:'1.2-2' }}</td>
+          <td>{{ (item.price * item.quantity) | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" class="total-label">Total Amount:</td>
+          <td class="total-amount">₹ {{ totalAmount | number:'1.2-2' }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+</div>
