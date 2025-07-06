@@ -2,6 +2,7 @@ package in.neelesh.online.shopping.serviceImpl;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.kafka.common.Uuid;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import in.neelesh.online.shopping.dto.ProductCreateDto;
 import in.neelesh.online.shopping.dto.ProductResponseDto;
 import in.neelesh.online.shopping.entity.Product;
 import in.neelesh.online.shopping.entity.ProductImage;
+import in.neelesh.online.shopping.repository.ProductImageRepository;
 import in.neelesh.online.shopping.repository.ProductRepository;
 import in.neelesh.online.shopping.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductServiceImpl implements ProductService {
 
 	private final ProductRepository productRepository;
-//	private final ProductImageRepository productImageRepository;
+	private final ProductImageRepository productImageRepository;
 
 	@Override
 	public Product createProduct(ProductCreateDto productdto, String storeManagerId, List<MultipartFile> images,
@@ -75,13 +77,15 @@ public class ProductServiceImpl implements ProductService {
 		product.setName(productdto.name());
 		product.setDescription(productdto.description());
 		product.setPrice(productdto.price());
-
+		product.setQuantity(productdto.quantity());
+				
 		if (images != null && !images.isEmpty()) {
+			productImageRepository.deleteByProductId(productId);
 			product.getImages().clear();
-
 			for (MultipartFile file : images) {
 				try {
 					ProductImage image = new ProductImage();
+					image.setId(UUID.randomUUID().toString());
 					image.setImageData(file.getBytes());
 					image.setProduct(product);
 					product.getImages().add(image);
@@ -113,5 +117,18 @@ public class ProductServiceImpl implements ProductService {
 				product.getPrice(), imageBase64List, product.getQuantity());
 
 		return List.of(dto);
+	}
+	
+	public List<ProductResponseDto> getListOfProduct(String userId, String realm) {
+		List<Product> productList = productRepository.findAll();
+
+		List<ProductResponseDto> dto = productList.stream().map(product -> {
+			List<String> imagebase64List = product.getImages().stream().map(ProductImage::getImageData)
+					.map(Base64.getEncoder()::encodeToString).toList();
+			return new ProductResponseDto(product.getId(), product.getName(), product.getDescription(),
+					product.getPrice(), imagebase64List, product.getQuantity());
+		}).toList();
+
+		return dto;
 	}
 }

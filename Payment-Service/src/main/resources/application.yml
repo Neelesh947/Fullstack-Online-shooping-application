@@ -37,3 +37,10 @@ keycloak:
   final:
     jwks:
       url: /protocol/openid-connect/certs
+
+razorpay:
+  key-id: rzp_test_mezMP44ifD2Xfv
+  key-secret: syqOv6V7dQbVuwWlHaXiPFgg
+
+webhook:
+  secret: neelesh

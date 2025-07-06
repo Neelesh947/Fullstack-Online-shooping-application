@@ -5,10 +5,12 @@ import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.UuidGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
@@ -26,9 +28,11 @@ public abstract class BaseEntity implements Serializable {
 	public static final String ENTITY_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	@Id
+	@GeneratedValue
+	@UuidGenerator(style = UuidGenerator.Style.TIME)
 	private String id;
 
-	@Column(name = "create_date_time", updatable = false)
+	@Column(name = "create_date_time", nullable = false, updatable = false)
 	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ENTITY_DATE_FORMAT)
 	private Timestamp createDateTime;

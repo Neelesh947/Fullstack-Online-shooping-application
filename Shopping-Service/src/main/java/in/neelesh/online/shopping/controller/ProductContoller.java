@@ -67,4 +67,11 @@ public class ProductContoller {
 		productService.deleteProduct(productId, storeManagerId, realm);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/all-product")
+	public ResponseEntity<List<ProductResponseDto>> getAllProduct(@PathVariable String realm) {
+		String userId = SecurityUtils.getCurrentUserIdSupplier.get();
+		List<ProductResponseDto> listOfProduct = productService.getListOfProduct(userId, realm);
+		return ResponseEntity.ok(listOfProduct);
+	}
 }

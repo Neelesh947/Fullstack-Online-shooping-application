@@ -1,6 +1,6 @@
 package in.neelesh.online.shopping.serviceImpl;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -35,29 +35,41 @@ public class CartServiceImpl implements CartService {
 					.orElseThrow(() -> new RuntimeException("Product not found for id: " + item.getProductId()));
 			double price = product.getPrice();
 			int quantity = item.getQuantity();
-			return new CartItemResponseDto(product.getId(), product.getName(), price, quantity, price * quantity);
+			String base64Image = null;
+			if (!product.getImages().isEmpty()) {
+				byte[] imageBytes = product.getImages().get(0).getImageData(); // take first image's id
+				base64Image =  "data:image/png;base64," + Base64.getEncoder().encodeToString(imageBytes);;
+			}
+			return new CartItemResponseDto(product.getId(), product.getName(), price, quantity, price * quantity,
+					base64Image);
 		}).collect(Collectors.toList());
 
 		double totalCartPrice = itemsDto.stream().mapToDouble(CartItemResponseDto::totalPrice).sum();
 		return new CartResponseDto(cart.getId(), cart.getCustomerId(), itemsDto, totalCartPrice);
 	}
 
-	@Override
 	public CartResponseDto addItemToCart(String customerId, String realm, @Valid CartItemRequestDto dto) {
-		Cart cart = cartRepository.findByCustomerId(customerId)
-				.orElseGet(() -> Cart.builder().customerId(customerId).build());
+		Cart cart = cartRepository.findByCustomerId(customerId).orElseGet(() -> {
+			Cart newCart = Cart.builder().customerId(customerId).items(new ArrayList<>()).build();
+			newCart.setId(UUID.randomUUID().toString());
+			return newCart;
+		});
 
-		CartItem existingItem = cart.getItems().stream().filter(item -> item.getProductId().equals(dto.productId()))
-				.findFirst().orElse(null);
-
-		if (existingItem != null) {
-			existingItem.setQuantity(existingItem.getQuantity() + dto.quantity());
-		} else {
-			CartItem newItem = CartItem.builder().productId(dto.productId()).quantity(dto.quantity()).cart(cart)
-					.build();
-			cart.getItems().add(newItem);
+		if (cart.getItems() == null) {
+			cart.setItems(new ArrayList<>());
 		}
-		cartRepository.save(cart);
+
+		boolean itemExists = cart.getItems().stream().anyMatch(item -> item.getProductId().equals(dto.productId()));
+
+		if (!itemExists) {
+			CartItem newItem = CartItem.builder()
+					.productId(dto.productId()).quantity(dto.quantity()).cart(cart)
+					.build();
+			newItem.setId(UUID.randomUUID().toString());
+			cart.getItems().add(newItem);
+			cartRepository.save(cart);
+		}
+
 		return getCart(customerId, realm);
 	}
 
