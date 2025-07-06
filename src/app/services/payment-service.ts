@@ -5,7 +5,6 @@ interface CreatePaymentRequest {
   customerId: string;
   cartId: string;
   amountInPaise: number;
-  paymentMode: string;
 }
 
 @Injectable({

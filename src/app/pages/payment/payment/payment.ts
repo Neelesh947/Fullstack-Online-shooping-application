@@ -22,18 +22,6 @@ export class Payment implements OnInit{
   @Input() customerId!: string;
   @Input() cartId!: string;
 
-  selectedMethod = 'UPI_LINK';
-
-  paymentMethods: PaymentMethod[] = [
-    { mode: 'QR_CODE', label: 'QR Code', icon: '🔳' },
-    { mode: 'UPI_LINK', label: 'UPI', icon: '📱' },
-    { mode: 'CREDIT_CARD', label: 'Credit Card', icon: '💳' },
-    { mode: 'DEBIT_CARD', label: 'Debit Card', icon: '💳' },
-    { mode: 'NET_BANKING', label: 'Net Banking', icon: '🏦' },
-    { mode: 'WALLET', label: 'Wallet', icon: '💼' },
-    { mode: 'BANK_TRANSFER', label: 'Bank Transfer', icon: '🏦' }
-  ];
-
   constructor(private paymentService: PaymentService){}
 
   ngOnInit(): void {
@@ -51,46 +39,22 @@ export class Payment implements OnInit{
     }
   }
 
-  selectMethod(mode: string) {
-    this.selectedMethod = mode;
-  }
-
-  getPaymentLabel(mode: string) {
-    const pm = this.paymentMethods.find(m => m.mode === mode);
-    return pm ? pm.label : mode;
-  }
-
   pay(){
     const payload = {
       customerId: this.customerId,
       cartId: this.cartId,
-      amountInPaise: this.totalPrice * 100,
-      paymentMode: this.selectedMethod
+      amountInPaise: this.totalPrice * 100
     };
     
     this.paymentService.createOrder(payload).subscribe(
       (res:any) =>{
         const order_id = res.razorpayOrderId;
-        if (this.selectedMethod === 'QR_CODE') {
-          this.generateQRCode();
-        } else if (this.selectedMethod === 'DEBIT_CARD') {
-          this.debitCard(res,order_id);
-          console.log("this.debitCard(res,order_id);")
-        }
+        this.razorPaymethodCalled(res,order_id);
       }
     )
   }
 
-  generateQRCode(){
-     const qrPayload = {
-      amount: this.totalPrice * 100,
-      currency: 'INR',
-      userId: this.customerId,
-      merchantName: 'Neelesh kumar'
-    };
-  }
-
-  debitCard(res: any, order_id: any) {
+  razorPaymethodCalled(res: any, order_id: any) {
   console.log("debit card called");
 
   const options = {
@@ -140,4 +104,7 @@ export class Payment implements OnInit{
   rzp.open();
   }
 
+  goBack() {
+    history.back();
+  }
 }

@@ -1,44 +1,37 @@
-<div class="payment-container">
-  <h2>🛒 Checkout</h2>
+<div class="payment-wrapper">
+  <div class="payment-container">
+    <h2>🛒 Checkout</h2>
 
-  <!-- Order Summary -->
-  <section class="order-summary">
-    <p><strong>Total Amount:</strong> ₹{{ totalPrice }}</p>
-  </section>
+    <!-- Order Summary -->
+    <section class="order-summary">
+      <p><strong>Total Amount:</strong> ₹{{ totalPrice }}</p>
+    </section>
 
-  <!-- Payment Method Selector -->
-  <div class="payment-methods">
-    <button
-      *ngFor="let method of paymentMethods"
-      (click)="selectMethod(method.mode)"
-      [class.active]="selectedMethod === method.mode"
-      [title]="method.label"
-    >
-      {{ method.icon }} {{ method.label }}
+    <!-- Pay Button -->
+    <button class="checkout-btn" (click)="pay()">
+      💳 Pay ₹{{ totalPrice }}
     </button>
+
+    <!-- Back Button -->
+    <button class="back-btn" (click)="goBack()">← Back</button>
+
+    <!-- Trust Badges -->
+    <div class="trust-badges">
+      <img
+        src="https://trustlock.co/wp-content/uploads/2019/01/ssl-secure-trust-badge-free.png"
+        alt="SSL Secured"
+        class="badge"
+      />
+      <img
+        src="https://www.kindpng.com/picc/m/396-3961854_pci-dss-certified-logo-png-transparent-png.png"
+        alt="PCI DSS Compliant"
+        class="badge"
+      />
+    </div>
+
+    <!-- Privacy Notice -->
+    <p class="privacy-notice">
+      Your payment information is securely processed and never stored.
+    </p>
   </div>
-
-  <!-- Pay Button -->
-  <button class="checkout-btn" (click)="pay()">
-    Pay ₹{{ totalPrice }} via {{ getPaymentLabel(selectedMethod) }}
-  </button>
-
-  <!-- Trust Badges -->
-  <div class="trust-badges">
-    <img
-      src="https://trustlock.co/wp-content/uploads/2019/01/ssl-secure-trust-badge-free.png"
-      alt="SSL Secured"
-      class="badge"
-    />
-    <img
-      src="https://www.kindpng.com/picc/m/396-3961854_pci-dss-certified-logo-png-transparent-png.png"
-      alt="PCI DSS Compliant"
-      class="badge"
-    />
-  </div>
-
-  <!-- Privacy Notice -->
-  <p class="privacy-notice">
-    Your payment information is securely processed and never stored.
-  </p>
 </div>
