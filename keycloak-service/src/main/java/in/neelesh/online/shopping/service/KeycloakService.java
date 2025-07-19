@@ -41,5 +41,7 @@ public interface KeycloakService {
 	ResponseEntity<?> deleteUserByUserId(String userId, String realm);
 	
 	public void logoutUserFromDashboard(String userId, String realm);
+	
+	public ResponseEntity<?> refreshAccessToken(String refreshToken, String realm);
 
 }

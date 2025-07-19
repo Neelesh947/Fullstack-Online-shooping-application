@@ -6,12 +6,16 @@ import java.util.UUID;
 
 import org.apache.kafka.common.Uuid;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.neelesh.online.shopping.dto.ProductCreateDto;
 import in.neelesh.online.shopping.dto.ProductResponseDto;
+import in.neelesh.online.shopping.entity.Cart;
+import in.neelesh.online.shopping.entity.CartItem;
 import in.neelesh.online.shopping.entity.Product;
 import in.neelesh.online.shopping.entity.ProductImage;
+import in.neelesh.online.shopping.repository.CartRepository;
 import in.neelesh.online.shopping.repository.ProductImageRepository;
 import in.neelesh.online.shopping.repository.ProductRepository;
 import in.neelesh.online.shopping.service.ProductService;
@@ -22,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductServiceImpl implements ProductService {
 
 	private final ProductRepository productRepository;
+	private final CartRepository cartRepository;
 	private final ProductImageRepository productImageRepository;
 
 	@Override
@@ -78,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
 		product.setDescription(productdto.description());
 		product.setPrice(productdto.price());
 		product.setQuantity(productdto.quantity());
-				
+
 		if (images != null && !images.isEmpty()) {
 			productImageRepository.deleteByProductId(productId);
 			product.getImages().clear();
@@ -118,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
 
 		return List.of(dto);
 	}
-	
+
 	public List<ProductResponseDto> getListOfProduct(String userId, String realm) {
 		List<Product> productList = productRepository.findAll();
 
@@ -131,4 +136,32 @@ public class ProductServiceImpl implements ProductService {
 
 		return dto;
 	}
+
+	@Transactional
+	public void reduceProductQuantity(String cartId) {
+	    Cart cart = cartRepository.findById(cartId)
+	        .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+	    // First reduce all product quantities
+	    for (CartItem item : cart.getItems()) {
+	        Product product = productRepository.findById(item.getProductId())
+	            .orElseThrow(() -> new RuntimeException("Product not found"));
+
+	        int updatedQty = product.getQuantity() - item.getQuantity();
+
+	        if (updatedQty < 0) {
+	            throw new RuntimeException("Not enough stock for product: " + product.getName());
+	        }
+
+	        product.setQuantity(updatedQty);
+	        productRepository.save(product);
+	    }
+
+	    // ✅ Then clear cart items after successful stock updates
+	    cart.getItems().clear(); // Clear in-memory
+	    cartRepository.save(cart); // Persist empty cart
+
+	    System.out.println("✅ Product quantities reduced and cart cleared for cart ID: " + cartId);
+	}
+
 }

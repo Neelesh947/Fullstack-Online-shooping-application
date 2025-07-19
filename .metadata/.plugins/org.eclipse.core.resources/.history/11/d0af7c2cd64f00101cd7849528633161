@@ -1,5 +1,0 @@
-package in.neelesh.online.shopping.dto;
-
-public record CartResponseDto() {
-
-}

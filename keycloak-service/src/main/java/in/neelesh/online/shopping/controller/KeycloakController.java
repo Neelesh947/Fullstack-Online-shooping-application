@@ -147,4 +147,10 @@ public class KeycloakController {
 					.body("Failed to logout user: " + e.getMessage());
 		}
 	}
+	
+	@PostMapping("/refresh-token")
+	public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> payload,@PathVariable String realm){
+		String refreshToken = payload.get("refresh_token");
+		return this.keycloakService.refreshAccessToken(refreshToken, realm);
+	}
 }

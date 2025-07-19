@@ -8,9 +8,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import in.neelesh.online.shopping.dto.PaymentEvent;
 import in.neelesh.online.shopping.entity.PaymentRecords;
 import in.neelesh.online.shopping.enums.PaymentMode;
 import in.neelesh.online.shopping.enums.PaymentStatus;
+import in.neelesh.online.shopping.kafka.PaymentEventProducer;
 import in.neelesh.online.shopping.repository.PaymentRecordsRepository;
 import in.neelesh.online.shopping.util.RazorPaySignatureVerify;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class WebhookServiceImpl implements WebhookService {
 	private final RazorPaySignatureVerify razorPaySignatureVerify;
 
 	private final PaymentRecordsRepository paymentRecordsRepository;
+	private final PaymentEventProducer paymentEventProducer;
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -74,7 +77,7 @@ public class WebhookServiceImpl implements WebhookService {
 		String orderId = entity.get("order_id").asText();
 		long amount = entity.get("amount").asLong();
 		String method = entity.get("method").asText();
-		String currency = entity.get("currency").asText();
+//		String currency = entity.get("currency").asText();
 
 		log.info("💰 Payment Captured | paymentId: {}, orderId: {}, amount: {}", paymentId, orderId, amount);
 
@@ -91,6 +94,12 @@ public class WebhookServiceImpl implements WebhookService {
 		paymentRecord.setPaymentMode(method != null ? mapToPaymentMode(method) : null);
 
 		paymentRecordsRepository.save(paymentRecord);
+
+		PaymentEvent event = PaymentEvent.builder().orderId(orderId).customerId(paymentRecord.getUserId())
+				.cartId(paymentRecord.getCartId()).paymentSuccess(true).build();
+
+		paymentEventProducer.sendPaymentEvent(event);
+
 	}
 
 	private void handlePaymentFailed(JsonNode rootNode) {

@@ -590,19 +590,50 @@ public class KeycloakServiceImpl implements KeycloakService {
 		}
 		String accessToken = tokenResponse.getBody().getAccessToken();
 		String url = MessageFormat.format(keycloakConfig.getGetUserLogoutFromDashboardUrl(), realm);
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);		
+		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> entity = new HttpEntity<>(headers);
-		
+
 		try {
 			restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-		} catch(HttpClientErrorException ex) {
+		} catch (HttpClientErrorException ex) {
 			throw ex;
-		} 
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw e;
+		}
+	}
+
+	public ResponseEntity<?> refreshAccessToken(String refreshToken, String realm) {
+		String tokenUrl = keycloakConfig.getTokenUrl().replace("{0}", realm);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+		body.add(Constants.CLIENT_ID, keycloakConfig.getKeycloakResource());
+		body.add(Constants.CLIENT_SECRET, keycloakConfig.getGetCredentialsSecret());
+		body.add(Constants.GRANT_TYPE, Constants.REFRESH_TOKEN);
+		body.add(Constants.REFRESH_TOKEN, refreshToken);
+
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+		try {
+			ResponseEntity<Map<String, Object>> response = restTemplate.exchange(tokenUrl, HttpMethod.POST, request,
+					new ParameterizedTypeReference<Map<String, Object>>() {
+					});
+
+			Map<String, Object> responseBody = response.getBody();
+			if (responseBody == null) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Empty response from Keycloak");
+			}
+
+			KeyCloakTokenResponseDto tokenResponse = mapToTokenResponse(responseBody);
+			return ResponseEntity.ok(tokenResponse);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Unexpected error during token refresh: " + e.getMessage());
 		}
 	}
 }

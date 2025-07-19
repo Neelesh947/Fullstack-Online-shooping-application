@@ -22,5 +22,7 @@ public interface ProductService {
 	List<ProductResponseDto> getProductsByStoreManagerAndId(String productId, String storeManagerId, String realm);
 
 	List<ProductResponseDto> getListOfProduct(String userId, String realm);
+	
+	public void reduceProductQuantity(String cartId);
 
 }

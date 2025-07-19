@@ -22,4 +22,7 @@ public class Constants {
 	public static final String NAME = "name";
 	public static final String DESCRIPTION = "description";
 	public static final String CLOSE_BY = "close_by";
+	
+	//kafka topics
+	public static final String PAYMENT_SUCCESS_TOPIC = "payment-success-topic";
 }

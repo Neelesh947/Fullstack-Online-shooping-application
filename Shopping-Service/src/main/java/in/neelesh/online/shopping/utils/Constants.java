@@ -18,4 +18,7 @@ public class Constants {
 	public static final String TRUE = "true";
 
 	public static final String SUCCESSFULLY_UPDATED = "successfully updated";
+
+	// kafka topics
+	public static final String PAYMENT_SUCCESS_TOPIC = "payment-success-topic";
 }

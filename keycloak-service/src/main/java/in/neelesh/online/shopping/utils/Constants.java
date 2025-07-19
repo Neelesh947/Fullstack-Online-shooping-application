@@ -24,6 +24,8 @@ public final class Constants {
 	public static final String GRANT_TYPE = "grant_type";
 
 	public static final String CLIENT_SECRET = "client_secret";
+	
+	public static final String REFRESH_TOKEN = "refresh_token";
 
 	public static final String LOGIN_TOPIC = "login-topic";
 	public static final String USER_CREATED_CONFIRMATION = "UserCreatedConfirmation";
