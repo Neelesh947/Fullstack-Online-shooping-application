@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -16,14 +16,24 @@ export class LoginSerice {
 
   constructor(private http: HttpClient) { }
 
-  //generate token
-  public generateTokens(loginData:any)
-  {
-    return this.http.post(`${baseUrl}/${realm}/login`,loginData);
+   /**
+   * Login and generate access/refresh tokens
+   * @param loginData { userName: string, password: string }
+   */  
+  public generateTokens(loginData: any): Observable<any> {
+    return this.http.post(`${baseUrl}/${realm}/login`, loginData);
   }
 
   public logoutUser(userId: string): Observable<any> {
     const url = `${baseUrl}/${realm}/logout/${userId}`;
     return this.http.post(url, {}, { responseType: 'text' });
+  }
+
+  /**
+   * Call backend to refresh the access token using refresh token
+   */
+  refreshToken(refreshToken: string): Observable<any> {
+    const url = `${baseUrl}/${realm}/refresh`;
+    return this.http.post(url, { refreshToken });
   }
 }

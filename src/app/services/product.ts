@@ -24,7 +24,7 @@ export class Product {
 
 
   private getAuthHeaders(): HttpHeaders {
-    const token = this.tokenService.getToken() || '';
+    const token = this.tokenService.getAccessToken() || '';
     return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });

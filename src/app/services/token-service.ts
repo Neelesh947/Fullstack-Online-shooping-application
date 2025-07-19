@@ -18,7 +18,8 @@ export interface DecodedToken {
 })
 export class TokenService {
 
-  private tokenKey = 'token';
+   private accessTokenKey = 'access_token';
+  private refreshTokenKey = 'refresh_token';
 
   // Auth state observable
   private authStatus = new BehaviorSubject<boolean>(this.isLoggedIn());
@@ -27,20 +28,26 @@ export class TokenService {
   constructor() {}
 
   // Save token
-  setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
-    this.authStatus.next(true); // Update login status
+  setTokens(accessToken: string, refreshToken: string): void {
+    localStorage.setItem(this.accessTokenKey, accessToken);
+    localStorage.setItem(this.refreshTokenKey, refreshToken);
+    this.authStatus.next(true);
   }
 
   // Retrieve token
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+  getAccessToken(): string | null {
+    return localStorage.getItem(this.accessTokenKey);
+  }
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem(this.refreshTokenKey);
   }
 
   // Clear token on logout
-  clearToken(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.authStatus.next(false); // Update login status
+  clearTokens(): void {
+    localStorage.removeItem(this.accessTokenKey);
+    localStorage.removeItem(this.refreshTokenKey);
+    this.authStatus.next(false);
   }
 
   // Decode the token
@@ -66,7 +73,7 @@ decodeToken(token: string | null): any | null {
 
   // Get full user details (decoded token)
   getUserDetails(): DecodedToken | null {
-    const token = this.getToken();
+    const token = this.getAccessToken();
     return token ? this.decodeToken(token) : null;
   }
 
@@ -78,12 +85,12 @@ decodeToken(token: string | null): any | null {
   // Get user roles
   getRoles(): string[] {
     const decoded = this.getUserDetails();
-    return decoded?.['roles'] || decoded?.authorities || [];
+    return decoded?.realm_access?.roles || decoded?.authorities || [];
   }
 
   // Check if token is expired
   isTokenExpired(): boolean {
-    const token = this.getToken();
+    const token = this.getAccessToken();
     if (!token) return true;
 
     const decoded = this.decodeToken(token);
@@ -95,7 +102,7 @@ decodeToken(token: string | null): any | null {
 
   // Check login status
   isLoggedIn(): boolean {
-    const token = this.getToken();
+    const token = this.getAccessToken();
     return !!token && !this.isTokenExpired();
   }
 

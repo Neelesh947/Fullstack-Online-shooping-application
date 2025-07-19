@@ -22,7 +22,7 @@ export class Payment implements OnInit{
   @Input() customerId!: string;
   @Input() cartId!: string;
 
-  constructor(private paymentService: PaymentService){}
+  constructor(private paymentService: PaymentService, private router:Router){}
 
   ngOnInit(): void {
 
@@ -78,6 +78,7 @@ export class Payment implements OnInit{
           if (verifyRes.success) {
             alert('✅ Payment successful!');
             // TODO: Navigate to success page, clear cart, etc.
+            this.router.navigate(['user-product-list']);
           } else {
             alert('❌ Payment verification failed!');
           }

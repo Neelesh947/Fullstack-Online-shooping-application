@@ -34,7 +34,7 @@ export class ShopkeeperDashboardComponent implements OnInit{
     }
     this.authService.logoutUser(this.userId).subscribe({
       next: () => {
-        this.tokenService.clearToken();
+        this.tokenService.clearTokens();
         this.router.navigate(['']);  
       },
       error: (error) => {
